@@ -1,0 +1,53 @@
+Kubernetes cluster ( Meaning it has multiple components spread across different servers over a network. These servers could be Virtual machines or bare metal servers.)
+
+A Kubernetes cluster consists of a control plane and worker nodes.
+
+✅ The control plane is responsible for maintaining the desired state of the cluster. It is also responsible for node/pod lifecycle management and exposing cluster API. It has the following components.
+1.	kube-apiserver
+2.	etcd
+3.	kube-scheduler
+4.	kube-controller-manager
+5.	cloud-controller-manager
+
+✅ The Worker nodes are responsible for running containerized applications. The worker Node has the following components.
+
+1. kubelet
+2. kube-proxy
+3. Container runtime (CRI-O, Docker Engine, Containerd, etc)
+
+✅ Additionally there are add-on components that you can add to the cluster to extend its functionality and make the cluster fully functional for application deployments.
+
+1. Web UI
+2. Core DNS
+3. Metrics Server
+4. CNI Plugins (Container Network Interface)
+
+In this Kubernetes distributed scenario, the connection happening through the network to connect with different Kubernetes components should be secure and all the components should be able to authenticate each other.
+
+Kubernetes uses PKI certificates for authentication over TLS.
+
+KUBE-API SERVER
+
+The kube-api server is the central hub of the Kubernetes cluster that exposes the Kubernetes API.
+
+It is the main entry point to the cluster. End users, and other cluster components, talk to the cluster via the API server.
+
+Also, Monitoring systems and third-party services may talk to API servers to interact with the cluster.
+
+All these systems communicate with the API server through HTTP REST APIs.
+
+However, the internal cluster components like the scheduler, controller, etc talk to the API server using gRPC.
+
+Kubernetes api-server is responsible for the following 
+
+✅ 𝗔𝗣𝗜 𝗺𝗮𝗻𝗮𝗴𝗲𝗺𝗲𝗻𝘁: Exposes the cluster API endpoint and handles all API requests.
+✅ 𝗔𝘂𝘁𝗵𝗲𝗻𝘁𝗶𝗰𝗮𝘁𝗶𝗼𝗻: Using client certificates, bearer tokens, and HTTP Basic Authentication
+✅ 𝗔𝘂𝘁𝗵𝗼𝗿𝗶𝘇𝗮𝘁𝗶𝗼𝗻: ABAC and RBAC evaluation
+✅ 𝗩𝗮𝗹𝗶𝗱𝗮𝘁𝗶𝗼𝗻: Processing API requests and validating data for the API objects like pods, services, etc. (Validation and Mutation Admission controllers)
+✅ It is the only component that communicates with etcd. 
+✅ API-server coordinates all the container orchestration processes between the control plane and worker node components.
+
+The communication between the API server and other components in the cluster happens over TLS to prevent unauthorized access to the cluster.
+
+
+
